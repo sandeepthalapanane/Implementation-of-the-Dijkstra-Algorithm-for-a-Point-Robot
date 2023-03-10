@@ -14,6 +14,8 @@ j = 0
 
 def create_map():
     obstacles = []
+    x_1 = []
+    y_1 = []
     for x in range(0, 601, 1):
         for y in range(0, 251, 1):
             if (x >= 230 and x <= 370 and (y-((15/26)*x) - 32.695) <= 0
@@ -21,31 +23,36 @@ def create_map():
                     and (y-((15/26)*x) + 128.849) >= 0):
                 # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
+                x_1.append(int(x))
+                y_1.append(int(y))
             if (x >= 95 and y >= 0 and x <= 155 and y <= 105):
                 # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
+                x_1.append(int(x))
+                y_1.append(int(y))
             if (x >= 95 and y >= 145 and x <= 155 and y <= 250):
                 # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
+                x_1.append(int(x))
+                y_1.append(int(y))
             if (x >= 455 and (y+(2*x) - 1156.18) <= 0 and (y-2*x + 906.18) >= 0):
                 # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
-    # plt.show()
+                x_1.append(int(x))
+                y_1.append(int(y))
+    ax.scatter(x_1, y_1, color='r', marker='o')
+    plt.show()
     return obstacles
 
 
-def input_start_goal(obstacles):
-    print("Enter start node (Sample: 10, 10 ): ")
+def input_start(obstacles, str):
+    print("Enter", str, "node (Sample: 10, 10 ): ")
     A = [int(i) for i in input().split(', ')]
     A_1 = (A[0], A[1])
     if A_1 in obstacles:
         print("The entered input lies on the obstacles, please try again")
-    print("Enter goal node (Sample: 100, 100 ): ")
-    B = [int(i) for i in input().split(', ')]
-    B_1 = (B[0], B[1])
-    if B_1 in obstacles:
-        print("The entered input lies on the obstacles, please try again")
-    return A_1, B_1
+        input_start(obstacles, str)
+    return A_1
 
 
 def moveup(que):
@@ -60,10 +67,12 @@ def moveup(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -79,10 +88,12 @@ def movedown(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -98,10 +109,12 @@ def moveleft(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -117,10 +130,12 @@ def moveright(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -136,10 +151,12 @@ def moveupleft(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -155,10 +172,12 @@ def moveupright(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -174,10 +193,12 @@ def movedownleft(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
@@ -192,16 +213,31 @@ def movedownright(que):
                 else:
                     j += 1
                     Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
                     return
         parent_index = que[1]
         j += 1
         new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
         Q.put(new_que)
 
 
+def generate_path(path, start, Goal):
+    backtrack = []
+    key = path.get(goal)
+    backtrack.append((Goal))
+    backtrack.append((key))
+    while (key != start):
+        key = path.get(key)
+        backtrack.append(key)
+    backtrack.reverse()
+    return backtrack
+
+
 obstacle = create_map()
-# Start, goal = input_start_goal(obstacle)
-Start, goal = (0, 0), (94, 0)
+Start = input_start(obstacle, 'Start')
+goal = input_start(obstacle, 'Goal')
+# Start, goal = (0, 0), (4, 5)
 print(Start, goal)
 visit = []
 Path = {}
@@ -229,5 +265,8 @@ while (Q.qsize() != 0):
             movedownright(queue)
     else:
         print('success')
+        Backtrack = generate_path(Path, Start, goal)
+        print(Backtrack)
+        print('-----------')
         print(queue)
         break
