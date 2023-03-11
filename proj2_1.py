@@ -203,6 +203,41 @@ def generate_path(path, start, Goal):
     return backtrack
 
 
+def dijkstra_algorithm():
+    while (Q.qsize() != 0):
+        queue = Q.get()
+        if (queue[1] != goal):
+            if queue[1] not in visit:
+                visit.append(queue[1])
+                if (queue[1][1]+1 >= 0 and queue[1][1]+1 <= 250):
+                    moveup(queue)
+                if (queue[1][1]-1 >= 0 and queue[1][1]-1 <= 250):
+                    movedown(queue)
+                if (queue[1][0]-1 >= 0 and queue[1][0]-1 <= 600):
+                    moveleft(queue)
+                if (queue[1][0]+1 >= 0 and queue[1][0]+1 <= 600):
+                    moveright(queue)
+                if (queue[1][1]+1 <= 250 and queue[1][0]-1 >= 0):
+                    moveupleft(queue)
+                if (queue[1][0]+1 <= 600 and queue[1][1]+1 <= 250):
+                    moveupright(queue)
+                if (queue[1][0]-1 >= 0 and queue[1][1]-1 >= 0):
+                    movedownleft(queue)
+                if (queue[1][0]+1 <= 600 and queue[1][1]-1 <= 250):
+                    movedownright(queue)
+        else:
+            print('success')
+            Backtrack = generate_path(Path, Start, goal)
+            print(Backtrack)
+            print('-----------')
+            print(queue)
+            et = time.time()
+            elapsed_time = et - st
+            print('Time to calculate path:', elapsed_time, 'seconds')
+            create_map(visit, Backtrack, Start, goal)
+            break
+
+
 Start = input_start('Start')
 goal = input_start('Goal')
 print(Start, goal)
@@ -211,35 +246,4 @@ touch = {}
 Path = {}
 Q = PriorityQueue()
 Q.put((0, Start))
-while (Q.qsize() != 0):
-    queue = Q.get()
-    if (queue[1] != goal):
-        if queue[1] not in visit:
-            visit.append(queue[1])
-            if (queue[1][1]+1 >= 0 and queue[1][1]+1 <= 250):
-                moveup(queue)
-            if (queue[1][1]-1 >= 0 and queue[1][1]-1 <= 250):
-                movedown(queue)
-            if (queue[1][0]-1 >= 0 and queue[1][0]-1 <= 600):
-                moveleft(queue)
-            if (queue[1][0]+1 >= 0 and queue[1][0]+1 <= 600):
-                moveright(queue)
-            if (queue[1][1]+1 <= 250 and queue[1][0]-1 >= 0):
-                moveupleft(queue)
-            if (queue[1][0]+1 <= 600 and queue[1][1]+1 <= 250):
-                moveupright(queue)
-            if (queue[1][0]-1 >= 0 and queue[1][1]-1 >= 0):
-                movedownleft(queue)
-            if (queue[1][0]+1 <= 600 and queue[1][1]-1 <= 250):
-                movedownright(queue)
-    else:
-        print('success')
-        Backtrack = generate_path(Path, Start, goal)
-        print(Backtrack)
-        print('-----------')
-        print(queue)
-        et = time.time()
-        elapsed_time = et - st
-        print('Time to calculate path:', elapsed_time, 'seconds')
-        create_map(visit, Backtrack, Start, goal)
-        break
+dijkstra_algorithm()
