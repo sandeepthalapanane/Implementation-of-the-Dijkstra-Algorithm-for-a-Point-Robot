@@ -21,27 +21,22 @@ def create_map():
             if (x >= 230 and x <= 370 and (y-((15/26)*x) - 32.695) <= 0
                 and (y+((15/26)*x) - 378.849) <= 0 and (y+((15/26)*x) - 217.304) >= 0
                     and (y-((15/26)*x) + 128.849) >= 0):
-                # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
                 x_1.append(int(x))
                 y_1.append(int(y))
             if (x >= 95 and y >= 0 and x <= 155 and y <= 105):
-                # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
                 x_1.append(int(x))
                 y_1.append(int(y))
             if (x >= 95 and y >= 145 and x <= 155 and y <= 250):
-                # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
                 x_1.append(int(x))
                 y_1.append(int(y))
             if (x >= 455 and (y+(2*x) - 1156.18) <= 0 and (y-2*x + 906.18) >= 0):
-                # ax.plot(int(x), int(y), color='r', marker='o', markersize=5)
                 obstacles.append((int(x), int(y)))
                 x_1.append(int(x))
                 y_1.append(int(y))
     ax.scatter(x_1, y_1, color='r', marker='o')
-    plt.show()
     return obstacles
 
 
@@ -56,69 +51,6 @@ def input_start(obstacles, str):
 
 
 def moveup(que):
-    global j
-    coordinates = (que[3][0]+1, que[3][1])
-    if coordinates not in visit and coordinates not in obstacle:
-        cost_to_come = que[0] + 1
-        for i in range(Q.qsize()):
-            if Q.queue[i][3] == coordinates:
-                if Q.queue[i][0] < cost_to_come:
-                    return
-                else:
-                    j += 1
-                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
-                    Path[coordinates] = que[3]
-                    return
-        parent_index = que[1]
-        j += 1
-        new_que = (cost_to_come, j, parent_index, coordinates)
-        Path[coordinates] = que[3]
-        Q.put(new_que)
-
-
-def movedown(que):
-    global j
-    coordinates = (que[3][0]-1, que[3][1])
-    if coordinates not in visit and coordinates not in obstacle:
-        cost_to_come = que[0] + 1
-        for i in range(Q.qsize()):
-            if Q.queue[i][3] == coordinates:
-                if Q.queue[i][0] < cost_to_come:
-                    return
-                else:
-                    j += 1
-                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
-                    Path[coordinates] = que[3]
-                    return
-        parent_index = que[1]
-        j += 1
-        new_que = (cost_to_come, j, parent_index, coordinates)
-        Path[coordinates] = que[3]
-        Q.put(new_que)
-
-
-def moveleft(que):
-    global j
-    coordinates = (que[3][0], que[3][1]-1)
-    if coordinates not in visit and coordinates not in obstacle:
-        cost_to_come = que[0] + 1
-        for i in range(Q.qsize()):
-            if Q.queue[i][3] == coordinates:
-                if Q.queue[i][0] < cost_to_come:
-                    return
-                else:
-                    j += 1
-                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
-                    Path[coordinates] = que[3]
-                    return
-        parent_index = que[1]
-        j += 1
-        new_que = (cost_to_come, j, parent_index, coordinates)
-        Path[coordinates] = que[3]
-        Q.put(new_que)
-
-
-def moveright(que):
     global j
     coordinates = (que[3][0], que[3][1]+1)
     if coordinates not in visit and coordinates not in obstacle:
@@ -139,9 +71,72 @@ def moveright(que):
         Q.put(new_que)
 
 
+def movedown(que):
+    global j
+    coordinates = (que[3][0], que[3][1]-1)
+    if coordinates not in visit and coordinates not in obstacle:
+        cost_to_come = que[0] + 1
+        for i in range(Q.qsize()):
+            if Q.queue[i][3] == coordinates:
+                if Q.queue[i][0] < cost_to_come:
+                    return
+                else:
+                    j += 1
+                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
+                    return
+        parent_index = que[1]
+        j += 1
+        new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
+        Q.put(new_que)
+
+
+def moveleft(que):
+    global j
+    coordinates = (que[3][0]-1, que[3][1])
+    if coordinates not in visit and coordinates not in obstacle:
+        cost_to_come = que[0] + 1
+        for i in range(Q.qsize()):
+            if Q.queue[i][3] == coordinates:
+                if Q.queue[i][0] < cost_to_come:
+                    return
+                else:
+                    j += 1
+                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
+                    return
+        parent_index = que[1]
+        j += 1
+        new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
+        Q.put(new_que)
+
+
+def moveright(que):
+    global j
+    coordinates = (que[3][0]+1, que[3][1])
+    if coordinates not in visit and coordinates not in obstacle:
+        cost_to_come = que[0] + 1
+        for i in range(Q.qsize()):
+            if Q.queue[i][3] == coordinates:
+                if Q.queue[i][0] < cost_to_come:
+                    return
+                else:
+                    j += 1
+                    Q.queue[i] = (cost_to_come, j, que[1], coordinates)
+                    Path[coordinates] = que[3]
+                    return
+        parent_index = que[1]
+        j += 1
+        new_que = (cost_to_come, j, parent_index, coordinates)
+        Path[coordinates] = que[3]
+        Q.put(new_que)
+
+
 def moveupleft(que):
     global j
-    coordinates = (que[3][0]+1, que[3][1]-1)
+    coordinates = (que[3][0]-1, que[3][1]+1)
     if coordinates not in visit and coordinates not in obstacle:
         cost_to_come = que[0] + 1.4
         for i in range(Q.qsize()):
@@ -203,7 +198,8 @@ def movedownleft(que):
 
 
 def movedownright(que):
-    coordinates = (que[3][0]-1, que[3][1]+1)
+    global j
+    coordinates = (que[3][0]+1, que[3][1]-1)
     if coordinates not in visit and coordinates not in obstacle:
         cost_to_come = que[0] + 1.4
         for i in range(Q.qsize()):
@@ -237,7 +233,7 @@ def generate_path(path, start, Goal):
 obstacle = create_map()
 Start = input_start(obstacle, 'Start')
 goal = input_start(obstacle, 'Goal')
-# Start, goal = (0, 0), (4, 5)
+# Start, goal = (0, 0), (50, 50)
 print(Start, goal)
 visit = []
 Path = {}
@@ -247,21 +243,21 @@ while (Q.qsize() != 0):
     queue = Q.get()
     visit.append(queue[3])
     if (queue[3] != goal):
-        if (queue[3][0]+1 >= 0 and queue[3][0]+1 <= 600):
+        if (queue[3][1]+1 >= 0 and queue[3][1]+1 <= 250):
             moveup(queue)
-        if (queue[3][0]-1 >= 0 and queue[3][0]-1 <= 600):
+        if (queue[3][1]-1 >= 0 and queue[3][1]-1 <= 250):
             movedown(queue)
-        if (queue[3][1]-1 >= 0 and queue[3][1]-1 <= 600):
+        if (queue[3][0]-1 >= 0 and queue[3][0]-1 <= 600):
             moveleft(queue)
-        if (queue[3][1]+1 >= 0 and queue[3][1]+1 <= 600):
+        if (queue[3][0]+1 >= 0 and queue[3][0]+1 <= 600):
             moveright(queue)
-        if (queue[3][0]+1 <= 600 and queue[3][1]-1 >= 0):
+        if (queue[3][1]+1 <= 250 and queue[3][0]-1 >= 0):
             moveupleft(queue)
-        if (queue[3][0]+1 <= 600 and queue[3][1]+1 <= 600):
+        if (queue[3][0]+1 <= 600 and queue[3][1]+1 <= 250):
             moveupright(queue)
         if (queue[3][0]-1 >= 0 and queue[3][1]-1 >= 0):
             movedownleft(queue)
-        if (queue[3][0]-1 >= 0 and queue[3][1]+1 <= 600):
+        if (queue[3][0]+1 <= 600 and queue[3][1]-1 <= 250):
             movedownright(queue)
     else:
         print('success')
@@ -270,3 +266,12 @@ while (Q.qsize() != 0):
         print('-----------')
         print(queue)
         break
+
+# for ele in visit:
+#     ax.scatter(ele[0], ele[1], marker='s', color='#1f77b4')
+#     plt.pause(0.025)
+
+# for i in Backtrack:
+#     ax.scatter(i[0], i[1], marker='s', color='k')
+#     plt.pause(0.025)
+# plt.show()
