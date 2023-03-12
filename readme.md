@@ -43,6 +43,10 @@ To run this program type the below instruction in the terminal after choosing th
 python - proj2_sandeep_thalapanane.py
 ```
 
+## Input
+
+Run the code and give the start and goal coordinates as x, y
+
 ## Output
 
 Visulaization of the Dijkstra Algorithm for path planning of a Point Robot showing node exploration and optimal path
