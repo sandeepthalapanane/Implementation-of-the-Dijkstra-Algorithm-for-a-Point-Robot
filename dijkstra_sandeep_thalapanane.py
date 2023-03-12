@@ -3,10 +3,10 @@ import time
 import pygame
 import vidmaker
 
-st = time.time()
+start_time = time.time()
 
 
-def to_pygame(coords, height):
+def coords_pygame(coords, height):
     return (coords[0], height - coords[1])
 
 
@@ -19,7 +19,7 @@ def create_map(visit, backtrack, start, Goal):
     size = [600, 250]
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Visualization")
-    video = vidmaker.Video("vidmaker.mp4", late_export=True)
+    video = vidmaker.Video("Animation_video.mp4", late_export=True)
 
     done = False
     clock = pygame.time.Clock()
@@ -40,45 +40,45 @@ def create_map(visit, backtrack, start, Goal):
         pygame.draw.rect(screen, "blue", [0, 0, 600, 5], 0)
         pygame.draw.rect(screen, "blue", [0, 245, 600, 5], 0)
         pygame.draw.rect(screen, "blue", [595, 0, 5, 250], 0)
-        a, b = to_pygame([455, 20], 250)
-        c, d = to_pygame([463, 20], 250)
-        e, f = to_pygame([1031/2, 125], 250)
-        g, h = to_pygame([463, 230], 250)
-        i, j = to_pygame([455, 230], 250)
+        a, b = coords_pygame([455, 20], 250)
+        c, d = coords_pygame([463, 20], 250)
+        e, f = coords_pygame([1031/2, 125], 250)
+        g, h = coords_pygame([463, 230], 250)
+        i, j = coords_pygame([455, 230], 250)
         pygame.draw.polygon(
             screen, "blue", ([a, b], [c, d], [e, f], [g, h], [i, j]), 0)
-        a, b = to_pygame([460, 25], 250)
-        c, d = to_pygame([460, 225], 250)
-        e, f = to_pygame([510, 125], 250)
+        a, b = coords_pygame([460, 25], 250)
+        c, d = coords_pygame([460, 225], 250)
+        e, f = coords_pygame([510, 125], 250)
         pygame.draw.polygon(screen, "red", [[a, b], [c, d], [e, f]], 0)
-        a, b = to_pygame([300, 2675/13], 250)
-        c, d = to_pygame([230, 2150/13], 250)
-        e, f = to_pygame([230, 1100/13], 250)
-        g, h = to_pygame([300, 575/13], 250)
-        i, j = to_pygame([370, 1100/13], 250)
-        k, l = to_pygame([370, 2150/13], 250)
+        a, b = coords_pygame([300, 2675/13], 250)
+        c, d = coords_pygame([230, 2150/13], 250)
+        e, f = coords_pygame([230, 1100/13], 250)
+        g, h = coords_pygame([300, 575/13], 250)
+        i, j = coords_pygame([370, 1100/13], 250)
+        k, l = coords_pygame([370, 2150/13], 250)
         pygame.draw.polygon(screen, "blue", [[a, b], [c, d], [
                             e, f], [g, h], [i, j], [k, l]], 0)
         pygame.draw.polygon(screen, "red", ((235, 87.5), (300, 50),
                             (365, 87.5), (365, 162.5), (300, 200), (235, 162.5)))
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(start, 250), 1)
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(Goal, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(start, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(Goal, 250), 1)
         for j in visit:
-            pygame.draw.circle(screen, (50, 137, 131), to_pygame(j, 250), 1)
+            pygame.draw.circle(screen, (50, 137, 131), coords_pygame(j, 250), 1)
             video.update(pygame.surfarray.pixels3d(
                 screen).swapaxes(0, 1), inverted=False)
             pygame.display.flip()
             clock.tick(400)
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(start, 250), 1)
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(Goal, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(start, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(Goal, 250), 1)
         for i in backtrack:
-            pygame.draw.circle(screen, (255, 255, 0), to_pygame(i, 250), 1)
+            pygame.draw.circle(screen, (255, 255, 0), coords_pygame(i, 250), 1)
             video.update(pygame.surfarray.pixels3d(
                 screen).swapaxes(0, 1), inverted=False)
             pygame.display.flip()
             clock.tick(400)
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(start, 250), 1)
-        pygame.draw.circle(screen, (255, 255, 0), to_pygame(Goal, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(start, 250), 1)
+        pygame.draw.circle(screen, (255, 255, 0), coords_pygame(Goal, 250), 1)
         pygame.display.flip()
         pygame.time.wait(3000)
         done = True
@@ -99,10 +99,6 @@ def check_obstacles(coordinates):
     if (x >= 595 or y >= 245 or x <= 5 or y <= 5):
         return False
     if (x >= 455 and (y+(2*x) - 1156.18) <= 0 and y <= 230 and y >= 20 and (y-2*x + 906.18) >= 0):
-        return False
-    if (x < 0 or y < 0):
-        return False
-    if (x > 600 or y > 250):
         return False
     return True
 
@@ -231,9 +227,9 @@ def dijkstra_algorithm():
             print(Backtrack)
             print('-----------')
             print(queue)
-            et = time.time()
-            elapsed_time = et - st
-            print('Time to calculate path:', elapsed_time, 'seconds')
+            end_time = time.time()
+            path_time = end_time - start_time
+            print('Time to calculate path:', path_time, 'seconds')
             create_map(visit, Backtrack, Start, goal)
             break
 
