@@ -1,4 +1,4 @@
-# proj2_sandeep_thalapanane.py
+# dijkstra_sandeep_thalapanane.py
 
 Implementation of the Dijkstra Algorithm for path planning of a Point Robot
 
