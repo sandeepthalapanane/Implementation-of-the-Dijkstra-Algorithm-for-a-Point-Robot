@@ -2,6 +2,7 @@ from queue import PriorityQueue
 import time
 import pygame
 import vidmaker
+from sortedcollections import OrderedSet
 
 start_time = time.time()
 
@@ -204,7 +205,7 @@ def dijkstra_algorithm():
         queue = Q.get()
         if (queue[1] != goal):
             if queue[1] not in visit:
-                visit.append(queue[1])
+                visit.add(queue[1])
                 if (queue[1][1]+1 >= 0 and queue[1][1]+1 <= 250):
                     moveup(queue)
                 if (queue[1][1]-1 >= 0 and queue[1][1]-1 <= 250):
@@ -237,7 +238,7 @@ def dijkstra_algorithm():
 Start = input_start('Start')
 goal = input_start('Goal')
 print(Start, goal)
-visit = []
+visit = OrderedSet()
 touch = {}
 Path = {}
 Q = PriorityQueue()
