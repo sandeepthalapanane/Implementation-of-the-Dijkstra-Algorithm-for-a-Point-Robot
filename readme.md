@@ -31,9 +31,19 @@ Type the below instruction in the terminal
 pip install vidmaker
 ```
 
+Use the package installer for python [pip] to install Sorted Collections
+
+Sorted Collections is a collection of containers that allow us to insert and remove elements very efficiently while maintaining sorted order.
+
+Type the below instruction in the terminal
+
+```bash
+pip install sortedcollections
+```
+
 ## Modules
 
-Using pygame, time, queue and vidmaker modules
+Using pygame, time, queue, sortedcollections and vidmaker modules
 
 ## Usage
 
@@ -50,6 +60,3 @@ Run the code and give the start and goal coordinates as x, y
 ## Output
 
 Visulaization of the Dijkstra Algorithm for path planning of a Point Robot showing node exploration and optimal path
-
-
-
