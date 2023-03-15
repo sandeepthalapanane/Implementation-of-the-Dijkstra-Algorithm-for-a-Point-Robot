@@ -50,7 +50,7 @@ Using pygame, time, queue, sortedcollections and vidmaker modules
 To run this program type the below instruction in the terminal after choosing the directory in terminal
 
 ```bash
-python - proj2_sandeep_thalapanane.py
+python - dijkstra_sandeep_thalapanane.py
 ```
 
 ## Input
